@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pomodoro Productivity Timer</title>
+    <meta name="description" content="A calm and aesthetic Pomodoro timer app to boost your productivity.">
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <div class="background-animation"></div>
+    <div class="container">
+        <header>
+            <h1>Focus</h1>
+        </header>
+
+        <nav class="modes">
+            <button class="mode-btn active" data-mode="work" id="mode-work">Work</button>
+            <button class="mode-btn" data-mode="shortBreak" id="mode-short-break">Short Break</button>
+            <button class="mode-btn" data-mode="longBreak" id="mode-long-break">Long Break</button>
+        </nav>
+
+        <main>
+            <div class="timer-container">
+                <svg class="progress-ring" width="300" height="300">
+                    <circle class="progress-ring__circle default-ring" stroke="#ffffff22" stroke-width="8"
+                        fill="transparent" r="140" cx="150" cy="150" />
+                    <circle class="progress-ring__circle animated-ring" stroke="#ffffff" stroke-width="8"
+                        stroke-linecap="round" fill="transparent" r="140" cx="150" cy="150" />
+                </svg>
+                <div class="timer-display" id="time">25:00</div>
+            </div>
+
+            <div class="controls">
+                <button class="btn" id="start-btn">Start</button>
+                <button class="btn btn-secondary" id="reset-btn">Reset</button>
+            </div>
+
+            <div class="session-counter">
+                <span>Completed Sessions: </span><span id="session-count">0</span>
+            </div>
+        </main>
+    </div>
+    <script src="script.js"></script>
+</body>
+
+</html>
