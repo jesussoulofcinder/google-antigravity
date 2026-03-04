@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Google Cloud Next '26</title>
+    <meta name="description" content="A 1-day Google Cloud Technologies Technical Conference featuring top industry speakers, networking, and expert talks.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@400;600;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+    <!-- Navbar -->
+    <nav class="navbar">
+        <div class="nav-content">
+            <div class="logo">
+                <span class="g-color">G</span>oogle <span class="c-color">Cloud</span> <span class="summit-label">Summit</span>
+            </div>
+            <div class="nav-links">
+                <a href="#home">Home</a>
+                <a href="#schedule">Schedule</a>
+                <a href="#speakers">Speakers</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <header class="hero" id="home">
+        <div class="glow-bg"></div>
+        <div class="hero-content">
+            <h1 class="hero-title">The Future of <br><span class="gradient-text">Cloud Innovation</span></h1>
+            <p class="hero-subtitle">Join us for a 1-day exclusive technical conference exploring the cutting-edge of Google Cloud, AI, Data, and Serverless technologies.</p>
+            <div class="hero-meta">
+                <div class="meta-item">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>
+                    <span>{{ today }}</span>
+                </div>
+                <div class="meta-item">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>
+                    <span>Moscone Center, San Francisco</span>
+                </div>
+            </div>
+            <a href="#schedule" class="cta-button">Explore Schedule</a>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="container">
+        
+        <!-- Search & Filter -->
+        <section class="controls">
+            <div class="search-bar">
+                <input type="text" id="searchInput" placeholder="Search by title, speaker, or keyword...">
+            </div>
+            <div class="filters">
+                <button class="filter-btn active" data-filter="all">All Tracks</button>
+                <button class="filter-btn" data-filter="Keynote">Keynote</button>
+                <button class="filter-btn" data-filter="AI/ML">AI / ML</button>
+                <button class="filter-btn" data-filter="Cloud Infrastructure">Infrastructure</button>
+                <button class="filter-btn" data-filter="Data & Databases">Data</button>
+                <button class="filter-btn" data-filter="Serverless">Serverless</button>
+                <button class="filter-btn" data-filter="Security">Security</button>
+            </div>
+        </section>
+
+        <!-- Schedule Section -->
+        <section id="schedule" class="schedule-section">
+            <h2 class="section-title">Schedule</h2>
+            <div class="schedule-timeline" id="scheduleTimeline">
+                <!-- Injected via app.py or JS, but we will render from server first and let JS filter it -->
+                {% for talk in talks %}
+                    <div class="talk-card {{ talk.category | replace(' & ', '-') | replace('/', '-') | lower }}" data-category="{{ talk.category }}">
+                        <div class="talk-time">{{ talk.time }}</div>
+                        <div class="talk-content">
+                            <div class="talk-header">
+                                <span class="talk-tag">{{ talk.category }}</span>
+                                <h3 class="talk-title">{{ talk.title }}</h3>
+                            </div>
+                            <p class="talk-desc">{{ talk.description }}</p>
+                            
+                            {% if talk.speakers %}
+                            <div class="talk-speakers">
+                                {% for speaker_name in talk.speakers %}
+                                    <div class="speaker-pill">
+                                        <div class="speaker-avatar">
+                                            {{ speaker_name[0] }}
+                                        </div>
+                                        <span>{{ speaker_name }}</span>
+                                    </div>
+                                {% endfor %}
+                            </div>
+                            {% endif %}
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+            <div id="noResults" class="no-results hidden">
+                <p>No talks found matching your criteria.</p>
+            </div>
+        </section>
+        
+        <!-- Speakers Section -->
+        <section id="speakers" class="speakers-section">
+            <h2 class="section-title">Featured Speakers</h2>
+            <div class="speaker-grid">
+                {% for speaker in speakers %}
+                <div class="speaker-card">
+                    <div class="speaker-avatar-large">
+                        {{ speaker.first_name[0] }}{{ speaker.last_name[0] }}
+                    </div>
+                    <div class="speaker-info">
+                        <h4 class="speaker-name">{{ speaker.full_name }}</h4>
+                        <a href="{{ speaker.linkedin }}" target="_blank" class="linkedin-link">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/></svg>
+                        </a>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <p>&copy; 2026 Google Cloud Summit Event. Built with Python & Flask.</p>
+    </footer>
+
+    <script src="{{ url_for('static', filename='js/main.js') }}"></script>
+</body>
+</html>
